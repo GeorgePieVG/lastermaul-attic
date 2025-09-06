@@ -1,0 +1,80 @@
+ACTOR Orc : DoomImp Replaces Doomimp
+{
+Health 60
+PainChance 40
+Speed 13
+SeeSound "ORCSee"
+PainSound "OrcHuff"
+DeathSound "OrcHuff"
+-REFLECTIVE
++SHIELDREFLECT
+
+States
+	{
+	Spawn:
+	ORCA A 10 A_Look
+	Loop
+	
+	Idle:
+	ORCA BCDE 5 A_Look
+	Loop
+	
+	See:
+	ORCA BBCCDDEE 3	A_Chase
+	Loop
+	
+	Missile:
+	ORCA F 12
+	ORCA G 8 A_FaceTarget
+	ORCA H 8
+	ORCA G 8 A_FaceTarget
+	ORCA H 8 A_SpawnProjectile("OrcSpearMagic")
+	ORCA G 4
+	Goto See
+
+
+	Melee:
+	ORCA G 6 A_FaceTarget
+	ORCA I 9 A_CustomMeleeAttack((18))
+	ORCA G 10
+	Goto See
+	
+	Pain:
+	ORCA J 8 A_StartSound("OrcHuff",0,0,.8)
+	ORCA F 10 A_SetReflectiveInvulnerable
+	ORCA F 20 A_CentaurDefend
+	ORCA F 1 A_UnSetReflectiveInvulnerable
+	Goto See
+	
+	Death:
+	ORCA K 1 A_StartSound("OrcHuff")
+	ORCA LMNOP 6 A_NoBlocking
+	ORCA P -1 
+	stop
+	
+	XDeath:
+	XORA A 2 A_StartSound("OrcHuff")
+	XORA BCD 2 A_NoBlocking
+	XORA EF 4 A_NoBlocking
+	XORA GHIJ 5 A_NoBlocking
+	XORA J -1 
+	stop
+	}
+}
+
+ACTOR OrcSpearMagic : DoomImpBall
+{
+Speed 15
+
+States
+	{
+	Spawn:
+	MGSP A 1 Bright
+	Loop
+	
+	Death:
+	MGSX A 4 Bright
+	MGSX BCDE 3 Bright
+	stop
+	}
+}

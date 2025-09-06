@@ -1,0 +1,43 @@
+ACTOR Ratman : Demon replaces Demon
+{
+Health 35
+States
+{
+	Spawn:
+	RATM A 5 A_Look
+	Loop
+	
+	Idle:
+	RATM A 5 A_Look
+	Loop
+	
+	See:
+	RATM ABCD 5 A_Chase
+	Loop
+	
+	Melee:
+	RATM E 6 A_MeleeAttack
+	RATM FG 6
+	Goto See
+	
+	Pain:
+	RATM H 8 A_Pain
+	RATM H 8
+	Goto See
+	
+	Death:
+	RATM I 6 A_NoBlocking
+	RATM JKLM 6
+	RATM N -1
+	Stop
+	
+	XDeath:
+    RATX A 5
+    RATX B 5 A_XScream
+    RATX C 5
+    RATX D 5 A_NoBlocking
+    RATX EFGHI 5
+    RATX J -1
+    Stop
+	}
+}
